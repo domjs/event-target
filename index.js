@@ -21,11 +21,7 @@ var key = '_eventtarget_listeners';
  */
 
 function EventTarget () {
-  init(this);
-}
-
-function init (eventTarget) {
-  eventTarget[key] = {};
+  this[key] = {};
 }
 
 /**
@@ -37,8 +33,7 @@ function init (eventTarget) {
 function addEventListener (type, listener, useCapture) {
   var listeners = this[key];
   if (!listeners) {
-    init(this);
-    listeners = this[key];
+    listeners = this[key] = {};
   }
   listeners = listeners[type];
   if ('function' == typeof listeners) {
