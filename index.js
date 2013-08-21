@@ -114,6 +114,15 @@ function dispatchEvent (evt) {
  * Invokes the given `fn` in a try/catch with `target` as "this" and the `evt`
  * event instance as the only passed in argument.
  *
+ * The .dispatchEvent() function MUST NOT throw an error if the callback function
+ * does. Instead, the Error should be propagated as an "uncaught exception", which
+ * is actually impossible to do with vanilla JS :(
+ *
+ * The MDN text is as follows: "Exceptions thrown by event handlers are reported
+ * as uncaught exceptions; the event handlers run on a nested callstack: they
+ * block the caller until they complete, but exceptions do not propagate to the
+ * caller."
+ *
  * @api private
  */
 
