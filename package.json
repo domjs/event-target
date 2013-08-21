@@ -1,5 +1,5 @@
 {
-  "name": "eventtarget",
+  "name": "event-target",
   "version": "0.0.0",
   "description": "W3C-compliant implementation of the EventTarget interface",
   "main": "index.js",
