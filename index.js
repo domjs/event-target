@@ -100,14 +100,48 @@ function dispatchEvent (evt) {
   if (!listeners) return true;
   if ('function' == typeof listeners) {
     // single callback function
-    listeners.call(this, evt);
+    invoke(this, evt, listeners);
   } else {
     // an array of callback functions
     for (var i = 0, l = listeners.length; i < l; i++) {
-      listeners[i].call(this, evt);
+      invoke(this, evt, listeners[i]);
     }
   }
   return !evt.defaultPrevented;
+}
+
+/**
+ * Invokes the given `fn` in a try/catch with `target` as "this" and the `evt`
+ * event instance as the only passed in argument.
+ *
+ * @api private
+ */
+
+function invoke (target, evt, fn) {
+  try {
+    fn.call(target, evt);
+  } catch (e) {
+    uncaught(e);
+  }
+}
+
+/**
+ * Throws the Error instance `e` as an "uncaught exception".
+ *
+ * @param {Error} e Error object to throw as "uncaught"
+ * @api private
+ */
+
+function uncaught (e) {
+  if ('object' == typeof process && process.emit) {
+    // is Node.js
+    process.emit('uncaughtException', e);
+  } else if ('object' == typeof window && window.onerror) {
+    // assume we're in the Browser
+    window.onerror(e.message, __filename, 0);
+  } else if ('object' == typeof console && console.error) {
+    console.error('UNCAUGHT', e);
+  }
 }
 
 EventTarget.prototype.addEventListener = addEventListener;
