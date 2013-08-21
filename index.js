@@ -92,6 +92,8 @@ function dispatchEvent (evt) {
   }
   var type = evt.type;
   if (!type) throw new Error('An attempt was made to use an object that is not, or is no longer, usable.');
+  // set the `target` property on the Event instance
+  evt.target = this;
   var listeners = this[key];
   if (!listeners) return true;
   listeners = listeners[type];
