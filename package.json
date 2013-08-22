@@ -19,6 +19,7 @@
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "event": "domjs/event"
   }
 }
