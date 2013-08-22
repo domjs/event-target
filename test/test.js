@@ -42,7 +42,7 @@ describe('EventTarget', function () {
       assert(1 === count);
     });
 
-    it('should work with 2 listener', function () {
+    it('should work with 2 listeners', function () {
       var type = 'event';
       var count1 = 0;
       var count2 = 0;
@@ -94,6 +94,52 @@ describe('EventTarget', function () {
       instance.addEventListener(type, one, false);
       var rtn = instance.dispatchEvent(event);
       assert(true === rtn);
+    });
+
+  });
+
+  describe('removing events', function () {
+
+    it('should not invoke the callback after it has been removed', function () {
+      var type = 'event';
+      var count = 0;
+      var event = new Event(type);
+      var instance = new EventTarget();
+      function one (e) {
+        count++;
+      }
+      instance.addEventListener(type, one, false);
+      assert(0 === count);
+      instance.dispatchEvent(event);
+      assert(1 === count);
+      instance.removeEventListener(type, one);
+      instance.dispatchEvent(event);
+      assert(1 === count);
+    });
+
+    it('should still invoke one callback, after the other has been removed', function () {
+      var type = 'event';
+      var count1 = 0;
+      var count2 = 0;
+      var event = new Event(type);
+      var instance = new EventTarget();
+      function one (e) {
+        count1++;
+      }
+      function two (e) {
+        count2++;
+      }
+      instance.addEventListener(type, one, false);
+      instance.addEventListener(type, two, false);
+      assert(0 === count1);
+      assert(0 === count2);
+      instance.dispatchEvent(event);
+      assert(1 === count1);
+      assert(1 === count2);
+      instance.removeEventListener(type, two, false);
+      instance.dispatchEvent(event);
+      assert(2 === count1);
+      assert(1 === count2);
     });
 
   });
