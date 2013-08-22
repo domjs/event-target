@@ -4,9 +4,12 @@
   "description": "W3C-compliant implementation of the EventTarget interface",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/domjs/event-target.git"
+  },
   "keywords": [
     "event",
     "target",
@@ -14,5 +17,8 @@
     "dom"
   ],
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "*"
+  }
 }
